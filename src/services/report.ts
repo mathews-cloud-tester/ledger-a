@@ -14,21 +14,21 @@ function timeoutFromEnvironment(): number {
   return parsed;
 }
 
-export function summarize(journal: Ledger): LedgerSummary {
+export function summarize(book: Ledger): LedgerSummary {
   const accounts = new Set<AccountId>();
-  for (const entry of journal.entries) for (const line of entry.lines) accounts.add(line.account);
-  const last = journal.entries.at(-1);
+  for (const entry of book.entries) for (const line of entry.lines) accounts.add(line.account);
+  const last = book.entries.at(-1);
   return {
-    ledgerId: journal.id,
+    ledgerId: book.id,
     accounts: accounts.size,
-    entries: journal.entries.length,
+    entries: book.entries.length,
     lastPostedAt: last ? last.postedAt : null,
   };
 }
 
-export async function buildReport(journal: Ledger, accounts: AccountId[]): Promise<ReportRow[]> {
+export async function buildReport(book: Ledger, accounts: AccountId[]): Promise<ReportRow[]> {
   const timeoutMs = timeoutFromEnvironment();
-  const rows = accounts.map((account) => ({ account, balance: balanceFor(journal, account) }));
+  const rows = accounts.map((account) => ({ account, balance: balanceFor(book, account) }));
   const work = new Promise<ReportRow[]>((resolve) => setImmediate(() => resolve(rows)));
   let timer: NodeJS.Timeout | undefined;
   const timeout = new Promise<never>((_, reject) => {
