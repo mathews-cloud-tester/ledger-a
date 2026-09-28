@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added `roundCents` helper for commercial (half-away-from-zero) cent rounding.
+
 ## 0.4.1
 
 - Settlement retries once when the region service times out.
