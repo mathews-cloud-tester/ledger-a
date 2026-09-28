@@ -19,7 +19,7 @@ export function feeScheduleFor(region: string): FeeSchedule {
 }
 
 /** Returns the fee, in minor units, that the region schedule charges on `amount`. */
-export function applyFee(amount: number, schedule: FeeSchedule): number {
+export function applyServiceFee(amount: number, schedule: FeeSchedule): number {
   if (amount <= 0) return 0;
   const proportional = Math.round((amount * schedule.basisPoints) / 10_000);
   return Math.max(proportional, schedule.minimum);
