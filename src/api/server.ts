@@ -1,4 +1,5 @@
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
+import { optionalRegion } from "../config/index.ts";
 import { createInvoice, listInvoices, type ApiResponse } from "./invoices.ts";
 
 function readJson(req: IncomingMessage): Promise<unknown> {
@@ -33,7 +34,7 @@ export async function route(req: IncomingMessage, res: ServerResponse): Promise<
   }
   if (req.method === "GET" && req.url === "/invoices") return send(res, listInvoices());
   if (req.method === "GET" && req.url === "/healthz") {
-    return send(res, { status: 200, body: { ok: true, region: process.env.LEDGER_REGION ?? "unset" } });
+    return send(res, { status: 200, body: { ok: true, region: optionalRegion() ?? "unset" } });
   }
   send(res, { status: 404, body: { error: "not found" } });
 }
@@ -41,6 +42,6 @@ export async function route(req: IncomingMessage, res: ServerResponse): Promise<
 if (import.meta.url === `file://${process.argv[1]}`) {
   const port = Number(process.env.PORT ?? 8080);
   createServer((req, res) => void route(req, res)).listen(port, () => {
-    console.log(`ledger-a listening on ${port} in region ${process.env.LEDGER_REGION ?? "unset"}`);
+    console.log(`ledger-a listening on ${port} in region ${optionalRegion() ?? "unset"}`);
   });
 }
