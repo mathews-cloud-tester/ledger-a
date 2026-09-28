@@ -1,3 +1,4 @@
+import { region as configuredRegion } from "../config/index.ts";
 import { feeScheduleFor, feesOwedBy, type Ledger } from "../ledger/index.ts";
 import type { AccountId } from "../models/entry.ts";
 
@@ -9,14 +10,8 @@ export interface SettlementResult {
   net: number;
 }
 
-function regionFromEnvironment(): string {
-  const region = process.env.LEDGER_REGION;
-  if (!region) throw new Error("LEDGER_REGION is not set");
-  return region;
-}
-
 export function settle(ledger: Ledger, account: AccountId): SettlementResult {
-  const region = regionFromEnvironment();
+  const region = configuredRegion();
   const schedule = feeScheduleFor(region);
   let gross = 0;
   for (const entry of ledger.entries) {
