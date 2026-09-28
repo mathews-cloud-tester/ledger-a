@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Renamed the fee helper export to `applyServiceFee` (pure identifier rename, no behavior change).
+
 ## 0.4.1
 
 - Settlement retries once when the region service times out.
