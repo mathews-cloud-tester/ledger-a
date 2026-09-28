@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Renamed the ledger export `applyFee` to `applyServiceFee` for clarity; all call sites and docs updated.
+
 ## 0.4.1
 
 - Settlement retries once when the region service times out.
