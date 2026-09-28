@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Renamed the ledger export `applyFee` to `applyServiceFee`; `CHECKS.md` Rule 1 updated to match.
+
 ## 0.4.1
 
 - Settlement retries once when the region service times out.
