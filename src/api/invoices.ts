@@ -1,4 +1,4 @@
-import { applyFee, feeScheduleFor } from "../ledger/index.ts";
+import { applyServiceFee, feeScheduleFor } from "../ledger/index.ts";
 
 export interface InvoiceRequest {
   customerId?: string;
@@ -35,7 +35,7 @@ export function createInvoice(body: InvoiceRequest): ApiResponse {
   const problem = validateInvoice(body);
   if (problem) return { status: 400, body: { error: problem } };
   const region = body.region ?? "eu-west";
-  const fee = applyFee(body.amount as number, feeScheduleFor(region));
+  const fee = applyServiceFee(body.amount as number, feeScheduleFor(region));
   const invoice: Invoice = {
     id: `inv_${invoices.length + 1}`,
     customerId,
