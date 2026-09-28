@@ -1,3 +1,4 @@
+import { timeoutMs as configuredTimeoutMs } from "../config/index.ts";
 import { balanceFor, type Ledger } from "../ledger/index.ts";
 import type { LedgerSummary } from "../models/account.ts";
 import type { AccountId } from "../models/entry.ts";
@@ -5,13 +6,6 @@ import type { AccountId } from "../models/entry.ts";
 export interface ReportRow {
   account: AccountId;
   balance: number;
-}
-
-function timeoutFromEnvironment(): number {
-  const raw = process.env.LEDGER_TIMEOUT_MS;
-  const parsed = raw === undefined ? 5000 : Number(raw);
-  if (!Number.isFinite(parsed) || parsed <= 0) throw new Error(`LEDGER_TIMEOUT_MS is invalid: ${raw}`);
-  return parsed;
 }
 
 export function summarize(ledger: Ledger): LedgerSummary {
@@ -27,7 +21,7 @@ export function summarize(ledger: Ledger): LedgerSummary {
 }
 
 export async function buildReport(ledger: Ledger, accounts: AccountId[]): Promise<ReportRow[]> {
-  const timeoutMs = timeoutFromEnvironment();
+  const timeoutMs = configuredTimeoutMs();
   const rows = accounts.map((account) => ({ account, balance: balanceFor(ledger, account) }));
   const work = new Promise<ReportRow[]>((resolve) => setImmediate(() => resolve(rows)));
   let timer: NodeJS.Timeout | undefined;
