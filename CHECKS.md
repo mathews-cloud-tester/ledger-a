@@ -17,6 +17,7 @@ the table in the same pull request; removed exports must be deleted from it.
 | `balanceFor` | `src/ledger/ledger.ts` | Compute an account balance |
 | `openLedger` | `src/ledger/ledger.ts` | Create an empty ledger |
 | `feesOwedBy` | `src/ledger/ledger.ts` | Total fees owed on an account's debits |
+| `roundCents` | `src/ledger/rounding.ts` | Round an amount to whole cents, half away from zero |
 
 ## Rule 2: ledger changes are listed in the changelog
 

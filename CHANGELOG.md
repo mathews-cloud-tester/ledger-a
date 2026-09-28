@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added `roundCents` for rounding amounts to whole cents, half away from zero.
+
 ## 0.4.1
 
 - Settlement retries once when the region service times out.
