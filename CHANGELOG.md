@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Renamed the ledger domain type and helpers to journal in the services layer (`Ledger` -> `Journal`, `openLedger` -> `openJournal`).
+
 ## 0.4.1
 
 - Settlement retries once when the region service times out.
